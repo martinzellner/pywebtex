@@ -65,11 +65,14 @@
   	  <div class="navbar-inner">
     		<div class="container">
     		  <ul class="nav">
-      			<li class="active"><a href="#">Home</a></li>
-      			<li><a href="#newDocumentDialog"  data-toggle="modal">New Document</a></li>
-      			<li><a class="document-compile" href="#">Compile</a></li>
-      			<li><a href="#settingsDialog" data-toggle="modal">Settings</a></li>
-      			<li><a class="document-save" href="#">Save</a></li>
+      			<li class="active"><a href="#"><i class="icon-home"></i></a></li>
+            <li class="divider-vertical"></li>
+      			<li><a href="#newDocumentDialog" title="New File"  data-toggle="modal"><i class="icon-file"></i></a></li>
+            <li class="divider-vertical"></li>
+            <li><a class="document-save"  title="Save" href="#"><i class="icon-hdd"></i></a></li>
+      			<li><a class="document-compile" href="#"  title="Compile"><i class="icon-play"></i></a></li>
+            <li class="divider-vertical"></li>
+      			<li><a href="#settingsDialog"  alt="Settings" data-toggle="modal" title="Settings"><i class="icon-th"></i></a></li>
     		  </ul>
     		</div>
   	  </div>
