@@ -8,17 +8,17 @@
 			background-color: #BBB;
 		}
 		.container-narrow {
-			width: 800px;
+			width: 1000px;
 			margin: 0 auto;
 		}
 
 		#editor{
-			width: 400px;
+			width: 500px;
 			height: 600px;
 			float: left;
 		}
 		#pdfviewer{
-			width: 300px;
+			width: 500px;
 			height: 600px;
 			float: right;
 		}

@@ -6,7 +6,7 @@ import codecs
 import subprocess 
 import email.utils
 
-@view_config(route_name='showDocument', renderer='pytex:templates/editor.pt')
+@view_config(route_name='showDocument', renderer='pywebtex:templates/editor.pt')
 def showDocument(request):
 	docName =  request.matchdict['docName']
 	f = codecs.open('files/' + docName, 'r', "utf-8")
@@ -49,8 +49,8 @@ if __name__ == '__main__':
     config.add_route('newFile', '/api/newfile')
     config.add_route('saveFile', '/api/save')
     config.add_route('compile', '/api/compile')
-    config.add_static_view(name='lib', path='pytex:lib')
-    config.add_static_view(name='build', path='pytex:build')
+    config.add_static_view(name='lib', path='pywebtex:lib')
+    config.add_static_view(name='build', path='pywebtex:build')
     config.scan()
 
     app = config.make_wsgi_app()
