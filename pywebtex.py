@@ -12,7 +12,7 @@ def showDocument(request):
 	f = codecs.open('files/' + docName, 'r', "utf-8")
 	content = f.read()
 	f.close()
-	return  {'editorcontent' : content}
+	return  {'filename' : docName, 'editorcontent' : content}
 
 @view_config(route_name='newFile')
 def newFile(request):
@@ -50,6 +50,8 @@ if __name__ == '__main__':
     config.add_route('saveFile', '/api/save')
     config.add_route('compile', '/api/compile')
     config.add_static_view(name='lib', path='pywebtex:lib')
+    config.add_static_view(name='css', path='pywebtex:css')
+    config.add_static_view(name='js', path='pywebtex:js')
     config.add_static_view(name='build', path='pywebtex:build')
     config.scan()
 
