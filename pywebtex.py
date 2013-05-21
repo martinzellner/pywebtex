@@ -37,9 +37,9 @@ def compile(request):
 	f = codecs.open('files/' + fileName, 'r+', "utf-8")
 	f.write(content)
 	f.close()
-	errorCode = subprocess.call(" latexmk  -p  -pdf -f -quiet -output-directory=./build/  files/" + fileName,  shell=True)
+	errorCode = subprocess.Popen("latexmk  -p  -pdf -f -quiet -output-directory=../build/ " + fileName,  cwd='files/', shell=True)
 	
-	subprocess.call("latexmk -c -output-directory=./build/  files/" + fileName,  shell=True)
+	subprocess.Popen("latexmk -c -output-directory=../build/ " + fileName,  cwd='files/',  shell=True)
 	return Response(str(errorCode))
 
 
