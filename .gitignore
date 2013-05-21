@@ -6,3 +6,5 @@ files/.DS_Store
 lib/.DS_Store
 
 *.tex
+
+.DS_Store
