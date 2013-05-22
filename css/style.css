@@ -5,6 +5,8 @@ body {
 .container-narrow {
 	width: 1010px;
 	margin: 0 auto;
+	clear: none;
+	float: left;
 }
 
 #editor{
@@ -42,4 +44,21 @@ body {
 	height: 300px; 
 	font-size: 10pt;
 	overflow:scroll;
+}
+
+#editor_frame {
+
+}
+
+#file_chooser {
+	width: 200px;
+	margin-right: 50px;
+	margin-top: 200px;
+	height: 500px;
+	clear: none;
+	float: left;
+}
+#file_chooser div {
+	width: 150px;
+	height: 500px;
 }

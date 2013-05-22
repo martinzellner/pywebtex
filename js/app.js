@@ -88,10 +88,7 @@ $(document).ready(function() {
 	    renderPage(pageNum);
 	});
 
-	// New Document
-    $("#newDocumentDialog").modal({
-		show: false
-	});
+	
 
      $(".document-log").popover({
      	placement: 'bottom',
@@ -103,6 +100,43 @@ $(document).ready(function() {
 
      	}
 	});
+
+     $("#uploadFile").click(function() {
+     	$('#uploadDialog').modal(function(){
+     		 $('.fileupload').fileupload();
+     	});
+
+     });
+
+
+     $(':file').change(function(){
+	    var file = this.files[0];
+	    name = file.name;
+	    size = file.size;
+	    type = file.type;
+	    //your validation
+	});
+
+
+    $('#upload-send').click(function(){
+	    var formData = new FormData();
+	    formData.append('file', $('#file-chooser')[0].files[0]);
+	    formData.append('projectHash', currentProjectHash);
+	    $.ajax({
+	        url: apiPath + '/file/upload',  //server script to process data
+	        type: 'POST',	    
+	        // Form data
+	        data: formData,
+	        //Options to tell JQuery not to process data or worry about content-type
+	        contentType: false,
+	        processData: false, 
+	    }).done( function(){
+	    	$('.fileupload').fileupload('reset');
+	    	$('#uploadDialog').modal('hide');
+	    	window.location.href = currentFile;
+	    });
+	});
+
 
 
     $("#newDocumentDialog .save-button").click(function(){
@@ -121,11 +155,6 @@ $(document).ready(function() {
 	});
 
     // Settings
-
-     $("#settingsDialog").modal({
-		show: false
- 	});
-
     $("#settingsDialog .save-button").click(function(){
 		$('#settingsDialog').modal('hide');
 	});

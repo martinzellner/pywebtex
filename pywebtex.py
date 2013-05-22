@@ -27,13 +27,18 @@ def showDocument(request):
 	projectHash =  request.matchdict['projectHash']
 	fileName =  request.matchdict['fileName']
 
+	projectPath = os.path.join(workingDir, projectDir, projectHash)
 	path = os.path.join(workingDir, projectDir, projectHash, fileName)
 
 	f = codecs.open(path, 'r', "utf-8")
 	content = f.read()
 	f.close()
 
-	return  {'filename' : fileName, 'editorcontent' : content}
+	files = [ f for f in os.listdir(projectPath) if os.path.isfile(os.path.join(projectPath,f)) ]
+
+	directories = [ f for f in os.listdir(projectPath) if os.path.isdir(os.path.join(projectPath,f)) ]
+
+	return  {'files' : files, 'directories': directories, 'filename' : fileName, 'editorcontent' : content}
 
 @view_config(route_name='new_project')
 def newFile(request):
@@ -73,6 +78,26 @@ def saveFile(request):
 	f.close()
 
 	return Response(fileName)
+
+
+@view_config(route_name='uploadFile')
+def uploadFile(request):
+
+    fileName = request.POST['file'].filename
+    input_file = request.POST['file'].file
+    projectHash = request.POST['projectHash']
+    outputPath = os.path.join(workingDir, projectDir, projectHash, fileName)
+
+    output_file = open(outputPath, 'wb')
+    input_file.seek(0)
+    while True:
+        data = input_file.read(2<<16)
+    	if not data:
+        	break
+    	output_file.write(data)
+    output_file.close();
+
+    return Response(outputPath)
 
 @view_config(route_name='showpdf')
 def showpdf(request):
@@ -114,10 +139,19 @@ if __name__ == '__main__':
     config.add_route('new_project', '/api/project/new')
     config.add_route('saveFile', '/api/save')
     config.add_route('compile', '/api/compile')
+    config.add_route('uploadFile', '/api/file/upload')
+
     config.add_static_view(name='lib', path='pywebtex:lib')
     config.add_static_view(name='css', path='pywebtex:css')
     config.add_static_view(name='js', path='pywebtex:js')
     config.add_route('showpdf', '/' + projectDir + '/{projectHash}/' + buildDir + '/{fileName}')
+    config.add_route('imageuploadform', '/upload')
+    # upload processing
+    # After replacing server/php/ in imageupload.pt with tal:attributes="action actionurl"
+    # the following can be replaced with any URL base
+    config.add_route('imageupload', '/server/php{sep:/*}{name:.*}')
+    # retrieving images
+    config.add_route('imageview', '/image/{name:.+}')
     config.scan()
 
     app = config.make_wsgi_app()
