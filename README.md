@@ -3,7 +3,7 @@ pywebtex
 
 A pyramid web application for editing latex.
 
-= What Works - so far =
+### What Works - so far
 
 - File upload
 - Create projects
@@ -12,7 +12,7 @@ A pyramid web application for editing latex.
 - Save files
 
 
-= What doesn't yet work =
+### What doesn't yet work
 
 - Create subfolders
 - User management
