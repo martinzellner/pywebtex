@@ -31,3 +31,15 @@ body {
 	line-height: 30px;
 	background-color: #EEE;
 }
+
+.popover {
+	max-width: 800px !important;
+}
+
+
+#logfile-container {
+	width: 700px;
+	height: 300px; 
+	font-size: 10pt;
+	overflow:scroll;
+}

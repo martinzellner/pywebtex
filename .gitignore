@@ -3,3 +3,4 @@ build/*
 files/*
 *.pyc
 .DS_Store
+projects/*
