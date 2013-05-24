@@ -1,4 +1,7 @@
-
+lib/pdftex.js
+lib/texlive.js*
+webseite
+lib/texlive
 build/*
 files/*
 *.pyc
