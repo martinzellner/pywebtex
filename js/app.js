@@ -109,6 +109,15 @@ $(document).ready(function() {
     });
 
 
+    $('#openPdf').click(function() {
+        window.open(rootPath + '/pdf/' + currentProjectHash + '/build/' + currentFile.split('.')[0] + '.pdf', '_blank');
+    });
+
+    $('#downloadPdf').click(function() {
+        window.open(rootPath + '/projects/' + currentProjectHash + '/build/' + currentFile.split('.')[0] + '.pdf', '_blank');
+
+    });
+
 
     $(".document-log").popover({
         placement: 'bottom',

@@ -122,11 +122,21 @@
       	<h4>${filename}</h4>
         <div id="editor">${editorcontent}</div>
         <div id="pdfviewer">
-        		<div class="pagination">
+
+
+
+
+        	<div class="pagination">
               <ul>
-                <li><a  href="#" id="prev">&laquo;</a></li>
-                <li><a> Page: <span id="page_num"></span> / <span id="page_count"></span> </a></li>
-                <li><a href="#" id="next">&raquo;</a></li>
+                <li><a  href="#" id="prev"><i class="icon-arrow-left"></i></a></li>
+                <li><a  style="color: #000;"> Page: <span id="page_num"  style="color: #000;"></span> / <span  style="color: #000;" id="page_count"></span> </a></li>
+                <li><a href="#" id="next"><i class="icon-arrow-right"></i></a></li>
+              </ul>
+   
+              <ul>
+                <li><a  href="#" id="openPdf" title="Open in new Window"><i class="icon-share"></i></a></li>
+                <li><a  href="#" id="downloadPdf" title="Download File"><i class="icon-download"></i></a></li>
+
               </ul>
         	 	</div>
         		<div>

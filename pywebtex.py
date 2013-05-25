@@ -45,6 +45,17 @@ def showDocument(request):
     return {'files': files, 'directories': directories, 'filename': fileName, 'editorcontent': content}
 
 
+@view_config(route_name='openPDF', renderer='pywebtex:templates/pdfviewer.pt')
+def openPDF(request):
+    fileName = request.matchdict['fileName']
+    projectHash = request.matchdict['projectHash']
+
+    path = os.path.join(workingDir, projectDir, projectHash, 'build', fileName)
+    pdfUrl = '../../../' + projectDir + '/' + \
+        projectHash + '/' + buildDir + '/' + fileName
+    return {'pdfPath': pdfUrl}
+
+
 @view_config(route_name='new_project')
 def newFile(request):
     fileName = request.POST.getone('fileName')
@@ -150,6 +161,8 @@ if __name__ == '__main__':
     config.add_route('new_project', '/api/project/new')
     config.add_route('saveFile', '/api/save')
     config.add_route('compile', '/api/compile')
+    config.add_route(
+        'openPDF',  '/pdf/{projectHash}/' + buildDir + '/{fileName}')
     config.add_route('uploadFile', '/api/file/upload')
     config.add_static_view(name='lib', path='pywebtex:lib')
     config.add_static_view(name='css', path='pywebtex:css')
