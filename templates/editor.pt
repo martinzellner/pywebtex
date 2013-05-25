@@ -106,6 +106,7 @@
             <li class="divider-vertical"></li>
             <li><a class="document-save"  title="Save" href="#"><i class="icon-hdd"></i></a></li>
       			<li><a class="document-compile" href="#"  title="Compile"><i class="icon-play"></i></a></li>
+            <li><a class="document-compile-client" href="#"  title="Compile in javascript">Compile on client (experimental)</a></li>
             <li><a class="document-log" href="#"  title="Log">Log</a></li>
             <li class="divider-vertical"></li>
       			<li><a href="#settingsDialog"  alt="Settings" data-toggle="modal" title="Settings"><i class="icon-th"></i></a></li>

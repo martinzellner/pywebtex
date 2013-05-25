@@ -54,6 +54,7 @@ $(document).ready(function() {
     var savedMessage = '<div class="alert alert-success">Saved.<a class="close" data-dismiss="alert" href="#">&times;</a></div>';
     var compileSuccessMessage = '<div class="alert  alert-success">Successfully compiled<a class="close" data-dismiss="alert" href="#">&times;</a></div>';
     var compilingMessage = '<div class="alert">Compiling...</div>';
+    var compilingDownloadMessage = '<div class="alert">Downloading packages and compiling (with javascript)...</div>';
 
     // State
     var currentProjectName = '';
@@ -229,9 +230,16 @@ $(document).ready(function() {
         return array;
     }
 
-    var button = $('.document-compile');
+    $('.document-compile').click(function() {
+        compileDocument();
+
+    });
+
+    var button = $('.document-compile-client');
     button.click(function(ev) {
-        button.text('Downloading and compiling…');
+        $('.marketing')
+            .before(compilingDownloadMessage)
+            .fadeIn(1000);
         button.attr('disabled', 'disabled');
         button.addClass('disabled');
 
@@ -251,7 +259,6 @@ $(document).ready(function() {
             var texlive = new TeXLive(pdftex);
 
             texlive.compile(code, root, function(pdf) {
-                button.text('Compile');
                 button.removeAttr('disabled');
                 button.removeClass('disabled');
 
@@ -280,7 +287,6 @@ $(document).ready(function() {
             });
         });
 
-        //compileDocument();
     });
 
 
