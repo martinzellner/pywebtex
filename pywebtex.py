@@ -4,6 +4,9 @@ from pyramid.view import view_config
 from pyramid.response import Response
 from pyramid.response import FileResponse
 from pyramid.static import static_view
+from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, update, select
+from sqlalchemy.sql import and_
+
 
 import subprocess
 
@@ -13,6 +16,12 @@ import hashlib
 import urlparse
 
 # Global variables
+
+# same as above, create meta-data
+engine = create_engine('sqlite:///users.db', echo=True)
+meta = MetaData()
+meta.bind = engine
+users_table = Table('users_table', meta, autoload=True)
 
 workingDir = os.path.dirname(__file__)
 projectDir = 'projects'
@@ -43,6 +52,26 @@ def showDocument(request):
         projectPath) if os.path.isdir(os.path.join(projectPath, f))]
 
     return {'files': files, 'directories': directories, 'filename': fileName, 'editorcontent': content}
+
+
+@view_config(route_name='home', renderer='pywebtex:templates/index.pt')
+def home(request):
+    return {'title': 'pyWebTeX'}
+
+
+@view_config(route_name='user', renderer='pywebtex:templates/user.pt')
+def user(request):
+    userName = request.matchdict['userName']
+
+    return {'userName': userName, 'projects': 'Test'}
+
+
+@view_config(route_name='register', renderer='json')
+def register(request):
+    userName = request.matchdict['userName']
+    userPasswordHash = request.matchdict['userPasswordHash']
+
+    return {'userName': userName, 'projects': 'Test'}
 
 
 @view_config(route_name='openPDF', renderer='pywebtex:templates/pdfviewer.pt')
@@ -161,6 +190,10 @@ if __name__ == '__main__':
     config.add_route('new_project', '/api/project/new')
     config.add_route('saveFile', '/api/save')
     config.add_route('compile', '/api/compile')
+    config.add_route('user', '/{userName}')
+    config.add_route('register', '/api/user/register')
+    config.add_route('home', '/')
+
     config.add_route(
         'openPDF',  '/pdf/{projectHash}/' + buildDir + '/{fileName}')
     config.add_route('uploadFile', '/api/file/upload')

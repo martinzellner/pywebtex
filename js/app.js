@@ -1,6 +1,17 @@
 var root = "../../";
 
 $(document).ready(function() {
+
+    // APP
+    //
+    // Get page info from document, resize canvas accordingly, and render page
+    //
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/clouds");
+    editor.getSession().setMode("ace/mode/latex");
+
+
+
     // PDF
 
     PDFJS.disableWorker = true;
@@ -10,10 +21,6 @@ $(document).ready(function() {
         scale = 0.8,
         canvas = document.getElementById('the-canvas'),
         ctx = canvas.getContext('2d');
-
-    //
-    // Get page info from document, resize canvas accordingly, and render page
-    //
 
     function renderPage(num) {
         // Using promise to fetch the page
@@ -38,14 +45,6 @@ $(document).ready(function() {
             .textContent = pdfDoc.numPages;
     }
 
-
-    var editor = ace.edit("editor");
-    editor.setTheme("ace/theme/clouds");
-    editor.getSession().setMode("ace/mode/latex");
-
-
-    // APP
-
     // Paths
     var rootPath = window.location.origin;
     var apiPath = rootPath + '/api'
@@ -66,10 +65,7 @@ $(document).ready(function() {
 
 
     function compileDocument() {
-
-        $('.marketing')
-            .before(compilingMessage)
-            .fadeIn(1000);
+        $('.marketing').before(compilingMessage).fadeIn(1000);
 
         $.post(apiPath + '/compile', {
             fileName: currentFile,
@@ -79,8 +75,7 @@ $(document).ready(function() {
             var path = data.pdfUrl;
             currentLog = data.compileLog;
 
-            PDFJS.getDocument(path)
-                .then(function getPdfHelloWorld(_pdfDoc) {
+            PDFJS.getDocument(path).then(function getPdfHelloWorld(_pdfDoc) {
                 pdfDoc = _pdfDoc;
                 renderPage(pageNum);
                 $('.alert')
@@ -118,7 +113,6 @@ $(document).ready(function() {
 
     });
 
-
     $(".document-log").popover({
         placement: 'bottom',
         html: true,
@@ -132,14 +126,24 @@ $(document).ready(function() {
     });
 
     $("#uploadFile").click(function() {
-        $('#uploadDialog')
-            .modal(function() {
-            $('.fileupload')
-                .fileupload();
+        $('#uploadDialog').modal(function() {
+            $('.fileupload').fileupload();
         });
-
     });
 
+
+    $('#login .btn-primary').click(function() {
+        $('#login').modal('hide');
+    });
+
+    $('#register .btn-primary').click(function() {
+        alert('Hello');
+        $.post(apiPath + '/api/user/register', {
+            userName: userName,
+            userPasswordHash: userPasswordHash,
+        });
+        $('#register').modal('hide');
+    });
 
     $(':file').change(function() {
         var file = this.files[0];
@@ -176,10 +180,8 @@ $(document).ready(function() {
 
     $("#newDocumentDialog .save-button").click(function() {
 
-        currentProjectName = $('#newDocumentDialog .projectname')
-            .val();
-        currentFile = $('#newDocumentDialog .filename')
-            .val();
+        currentProjectName = $('#newDocumentDialog .projectname').val();
+        currentFile = $('#newDocumentDialog .filename').val();
 
         $.post(apiPath + '/project/new', {
             projectName: currentProjectName,
@@ -295,10 +297,7 @@ $(document).ready(function() {
                     .click(function() {});
             });
         });
-
     });
-
-
 
     var downloadFiles = function(pdftex, files, callback) {
         var pending = files.length;
@@ -316,5 +315,5 @@ $(document).ready(function() {
     var document_files = [
         [root + 'test.jpg', '/', 'test.jpg']
     ];
-    //compileDocument();
+
 });
