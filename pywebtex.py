@@ -56,7 +56,14 @@ def showDocument(request):
 
 @view_config(route_name='home', renderer='pywebtex:templates/index.pt')
 def home(request):
-    return {'title': 'pyWebTeX'}
+
+    relativePath = '.'
+    styles = [relativePath + "/lib/bootstrap/css/bootstrap.min.css",
+              relativePath + "/lib/jasny-bootstrap/css/jasny-bootstrap.min.css", relativePath + "/css/style.css"]
+    scripts = [
+        "http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js", "http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js",
+        relativePath + "/lib/bootstrap/js/bootstrap.js", relativePath + "/lib/jasny-bootstrap/js/jasny-bootstrap.min.js", relativePath + '/js/app.js']
+    return {'title': 'pyWebTeX', 'scripts': scripts, 'styles': styles}
 
 
 @view_config(route_name='user', renderer='pywebtex:templates/user.pt')
