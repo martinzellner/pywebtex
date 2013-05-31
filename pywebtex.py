@@ -102,15 +102,29 @@ def newFile(request):
 
     # Creating new file
     projectPath = os.path.join(workingDir, projectDir, projectHash)
+    filePath = os.path.join(projectPath, fileName)
+
     if os.path.exists(projectPath):
         print 'Error creating project. Folder already used.'
         return Response('Error creating project. Folder already used.')
     else:
         os.makedirs(projectPath)
 
-    filePath = os.path.join(projectPath, fileName)
     f = codecs.open(filePath, 'w', "utf-8")
     f.close()
+
+    print 'Init GIT'
+    # Init the Git Repo
+    gitInitArgs = ["git", "init"]
+    gitInitProcess = subprocess.Popen(
+        gitInitArgs, cwd=projectPath, shell=True)
+
+    print 'Add File to GIT'
+
+    # Add file
+    gitAddArgs = ["git", "add", fileName]
+    gitAddProcess = subprocess.Popen(
+        gitAddArgs, cwd=projectPath)
 
     projectUrl = './' + projectHash + '/' + fileName
     return Response(projectUrl)
@@ -124,10 +138,16 @@ def saveFile(request):
     content = request.POST.getone('content')
 
     path = os.path.join(workingDir, projectDir, projectHash, fileName)
+    projectPath = os.path.join(workingDir, projectDir, projectHash)
 
     f = codecs.open(path, 'r+', "utf-8")
     f.write(content)
     f.close()
+
+    # Add file
+    gitArgs = ["git", "commit", "-m \"Auto Commit by pyWebTeX\""]
+    gitProcess = subprocess.Popen(
+        gitArgs, cwd=projectPath)
 
     return Response(fileName)
 
