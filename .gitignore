@@ -6,6 +6,6 @@ build/*
 files/*
 *.pyc
 .DS_Store
-projects/*
-
 *.db
+
+*.pdf
