@@ -212,6 +212,8 @@ def compile(request):
 
 if __name__ == '__main__':
     config = Configurator()
+    config.include('pyramid_chameleon')
+
     config.add_route('showDocument', '/' +
                      projectDir + '/{projectHash}/{fileName}')
     config.add_route('new_project', '/api/project/new')
